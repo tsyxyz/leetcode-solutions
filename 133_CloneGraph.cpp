@@ -77,5 +77,20 @@ private:
 };
 
 TEST(TestCloneGraph, case01) {
+    Node* node_1 = new Node(1);
+    Node* node_2 = new Node(2);
+    Node* node_3 = new Node(3);
+    Node* node_4 = new Node(4);
+    node_1->neighbors.push_back(node_2);
+    node_1->neighbors.push_back(node_4);
+    node_2->neighbors.push_back(node_1);
+    node_2->neighbors.push_back(node_3);
+    node_3->neighbors.push_back(node_2);
+    node_3->neighbors.push_back(node_4);
+    node_4->neighbors.push_back(node_1);
+    node_4->neighbors.push_back(node_3);
+
+    Solution solution;
+    Node* result = solution.cloneGraph(node_1);
 
 }
