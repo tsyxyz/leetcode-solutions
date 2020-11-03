@@ -14,7 +14,7 @@ public:
         marked_.resize(numCourses, false);
         on_stack_.resize(numCourses, false);
 
-        buildGraph(numCourses, prerequisites);
+        buildGraph(prerequisites);
         for (int v = 0; v < graph_.size(); ++v) {
             if (!marked_[v]) {
                 dfs(v);
@@ -24,7 +24,7 @@ public:
     }
 
 private:
-    void buildGraph(int numCourses, vector<vector<int>>& prerequisites) {
+    void buildGraph(vector<vector<int>>& prerequisites) {
         for (size_t i = 0; i < prerequisites.size(); ++i) {
             auto edge = prerequisites[i];
             graph_[edge[0]].push_back(edge[1]);
