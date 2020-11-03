@@ -15,7 +15,7 @@ public:
         on_stack_.resize(numCourses, false);
 
         buildGraph(prerequisites);
-        for (int v = 0; v < graph_.size(); ++v) {
+        for (size_t v = 0; v < graph_.size(); ++v) {
             if (!marked_[v]) {
                 dfs(v);
             }

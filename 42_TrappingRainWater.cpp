@@ -46,7 +46,7 @@ private:
         vector<int> higherPillarsIdx;
         int prevHeight = pillars[0];
         higherPillarsIdx.push_back(0);
-        for (int i = 1; i < pillars.size(); ++i) {
+        for (size_t i = 1; i < pillars.size(); ++i) {
             if (pillars[i] > prevHeight) {
                 higherPillarsIdx.push_back(i);
                 prevHeight = pillars[i];
@@ -54,7 +54,7 @@ private:
         }
         int area = 0;
         int startHeight = pillars[higherPillarsIdx[0]];
-        for (int i = 0; i < higherPillarsIdx.size(); ++i) {
+        for (size_t i = 0; i < higherPillarsIdx.size(); ++i) {
             int dx = higherPillarsIdx[i];
             int dy = pillars[higherPillarsIdx[i]] - startHeight;
             area += (dx * dy);
@@ -75,7 +75,7 @@ private:
         }
         int area = 0;
         int startHeight = pillars[higherPillarsIdx[0]];
-        for (int i = 0; i < higherPillarsIdx.size(); ++i) {
+        for (size_t i = 0; i < higherPillarsIdx.size(); ++i) {
             int dx = static_cast<int>(pillars.size()) - 1 - higherPillarsIdx[i];
             int dy = pillars[higherPillarsIdx[i]] - startHeight;
             area += (dx * dy);
