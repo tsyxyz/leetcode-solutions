@@ -4,6 +4,7 @@
 #include <stack>
 
 using namespace std;
+
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>> &prerequisites) {
@@ -37,7 +38,7 @@ private:
     void build_graph(vector<vector<int> > &prerequisites) {
         for (size_t i = 0; i < prerequisites.size(); ++i) {
             auto edge = prerequisites[i];
-            graph_[edge[0]].push_back(edge[1]);
+            graph_[edge[1]].push_back(edge[0]);
         }
     }
 
@@ -69,6 +70,15 @@ TEST(TestCourseScheduleII, case01) {
     vector<vector<int> > prerequisites = {{1, 0}};
     Solution solution;
     vector<int> result = solution.findOrder(2, prerequisites);
+    for (size_t i = 0; i < result.size(); ++i) {
+        std::cout << result[i] << " ";
+    }
+}
+
+TEST(TestCourseScheduleII, case02) {
+    vector<vector<int> > prerequisites = {{1,0},{2,0},{3,1},{3,2}};
+    Solution solution;
+    vector<int> result = solution.findOrder(4, prerequisites);
     for (size_t i = 0; i < result.size(); ++i) {
         std::cout << result[i] << " ";
     }
