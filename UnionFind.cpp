@@ -46,7 +46,6 @@ public:
 
     int Count() {
         return count_;
-        return 0;
     }
 
 private:
