@@ -85,6 +85,14 @@ private:
     }
 };
 
+namespace monotony_stack {
+class Solution {
+
+};
+
+
+}
+
 TEST(TestTrappingRainWater, case01) {
     Solution solution;
     vector<int> input = {4, 0, 6, 0, 5, 0, 7, 0, 5, 0, 6, 0, 4, 0, 3};
