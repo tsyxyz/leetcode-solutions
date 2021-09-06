@@ -15,37 +15,28 @@ class Solution {
 public:
     bool isValidBST(TreeNode* root) {
         if (!root) return true;
+        bool result = isValidBST(root, nullptr, nullptr);
+        return result;
+    }
 
-        bool validLeft = isValidBST(root->left);
-        bool validRight = isValidBST(root->right);
-        bool validCurrent = true;
-        if (root->left && root->left->val >= root->val) {
-            validCurrent = false;
-        }
-        if (root->right && root->right->val <= root->val) {
-            validCurrent = false;
-        }
+private:
+    bool isValidBST(TreeNode* root, TreeNode* min, TreeNode* max) {
+        if (!root) return true;
 
-        if (root->left) {
-            TreeNode* p = root->left;
-            while (!p->right) {
-                p = p->right;
-            }
-            if (p->val >= root->val) {
-                validCurrent = false;
-            }
-        }
-
-        if (root->right) {
-            TreeNode* p = root->right;
-            while (!p->left) {
-                p = p->left;
-            }
-            if (p->val <= root->val) {
-                validCurrent = false;
-            }
-        }
-
-        return validCurrent && validLeft && validRight;
+        if (min && (root->val <= min->val)) return false;
+        if (max && (root->val >= max->val)) return false;
+        return isValidBST(root->left, min, root) && isValidBST(root->right, root, max);
     }
 };
+
+TEST(Test_98, case_01) {
+    TreeNode n3(3);
+    TreeNode n6(6);
+    TreeNode n4(4, &n3, &n6);
+    TreeNode n1(1);
+    TreeNode n5(5, &n1, &n4);
+
+    Solution s;
+    bool result = s.isValidBST(&n5);
+    EXPECT_FALSE(result);
+}
