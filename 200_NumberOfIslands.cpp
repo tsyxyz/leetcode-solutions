@@ -1,4 +1,5 @@
 #include <vector>
+#include <queue>
 
 #include <gtest/gtest.h>
 
@@ -63,6 +64,9 @@ private:
     vector<int> size_;
 };
 
+/*
+ * Union Find
+ */
 class Solution {
 public:
     int numIslands(vector<vector<char>>& grid) {
@@ -109,6 +113,73 @@ public:
     }
 };
 
+/*
+ * BFS
+ */
+class Solution2 {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        vector<bool> visited(rows * cols, false);
+
+        int count = 0;
+        for (int r = 0; r < rows; ++r) {
+            for (int c = 0; c < cols; ++c) {
+                int curIndex = r * cols + c;
+                if (grid[r][c] == '1' && !visited[curIndex]) {
+                    bfs(grid, r, c, rows, cols, visited);
+                    count += 1;
+                }
+            }
+        }
+        return count;
+    }
+
+private:
+    void bfs(const vector<vector<char>>& grid, int r, int c, int rows, int cols, vector<bool>& visited) {
+        int curIndex = r * cols + c;
+        queue<int> q;
+        q.push(curIndex);
+        visited[curIndex] = true;
+
+        while (!q.empty()) {
+            int front = q.front();
+            q.pop();
+            r = front / cols;
+            c = front % cols;
+            if (r - 1 >= 0 && grid[r - 1][c] == '1') {
+                int upIndex = (r - 1) * cols + c;
+                if (!visited[upIndex]) {
+                    q.push(upIndex);
+                    visited[upIndex] = true;
+                }
+            }
+            if (r + 1 < rows && grid[r + 1][c] == '1') {
+                int downIndex = (r + 1) * cols + c;
+                if (!visited[downIndex]) {
+                    q.push(downIndex);
+                    visited[downIndex] = true;
+                }
+            }
+            if (c - 1 >= 0 && grid[r][c - 1] == '1') {
+                int leftIndex = r * cols + c - 1;
+                if (!visited[leftIndex]) {
+                    q.push(leftIndex);
+                    visited[leftIndex] = true;
+                }
+            }
+            if (c + 1 < cols && grid[r][c + 1] == '1') {
+                int rightIndex = r * cols + c + 1;
+                if (!visited[rightIndex]) {
+                    q.push(rightIndex);
+                    visited[rightIndex] = true;
+                }
+            }
+        }
+    }
+};
+
 TEST(TestNumberOfIslands, case01) {
     vector<vector<char>> input = {{'1', '1', '1', '1', '0'},
                                   {'1', '1', '0', '1', '0'},
@@ -127,4 +198,14 @@ TEST(TestNumberOfIslands, case02) {
     Solution solution;
     int result = solution.numIslands(input);
     cout << result << endl;
+}
+
+TEST(Test_200, case_bfs) {
+    vector<vector<char>> input = {{'1', '1', '1', '1', '0'},
+                                  {'1', '1', '0', '1', '0'},
+                                  {'1', '1', '0', '0', '0'},
+                                  {'0', '0', '0', '0', '0'}};
+    Solution2 solution;
+    int result = solution.numIslands(input);
+    ASSERT_EQ(result, 1);
 }

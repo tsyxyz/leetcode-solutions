@@ -43,7 +43,7 @@ public:
         }
 
         if (parent_.count(x) == 0 || parent_.count(y) == 0) return false;
-        if (parent_[x] != parent_[y]) return false;
+        if (parent_[x] == parent_[y]) return false;
         if (depth_[x] != depth_[y]) return false;
 
         return true;
@@ -53,3 +53,26 @@ private:
     unordered_map<int, int> parent_;
     unordered_map<int, int> depth_;
 };
+
+TEST(Test_993, case_01) {
+    TreeNode n4(4);
+    TreeNode n2(2, &n4, nullptr);
+    TreeNode n3(3);
+    TreeNode n1(1, &n2, &n3);
+
+    Solution s;
+    bool result = s.isCousins(&n1, 4, 3);
+    ASSERT_FALSE(result);
+}
+
+TEST(Test_993, case_02) {
+    TreeNode n4(4);
+    TreeNode n2(2, nullptr, &n4);
+    TreeNode n5(5);
+    TreeNode n3(3, nullptr, &n5);
+    TreeNode n1(1, &n2, &n3);
+
+    Solution s;
+    bool result = s.isCousins(&n1, 5, 4);
+    ASSERT_TRUE(result);
+}
