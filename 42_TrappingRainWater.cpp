@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -85,13 +86,30 @@ private:
     }
 };
 
-namespace monotony_stack {
-class Solution {
-
+/*
+ * 单调栈
+ */
+class Solution2 {
+public:
+    int trap(vector<int>& height) {
+        stack<int> s;
+        int result = 0;
+        for (int i = 0; i < static_cast<int>(height.size()); ++i) {
+            while (!s.empty() && height[s.top()] < height[i]) {
+                int top = s.top();
+                s.pop();
+                if (s.empty()) {
+                    break;
+                }
+                int w = i - s.top() - 1;
+                int h = min(height[s.top()], height[i]) - height[top];
+                result += w * h;
+            }
+            s.push(i);
+        }
+        return result;
+    }
 };
-
-
-}
 
 TEST(TestTrappingRainWater, case01) {
     Solution solution;
@@ -102,6 +120,20 @@ TEST(TestTrappingRainWater, case01) {
 
 TEST(TestTrappingRainWater, case02) {
     Solution solution;
+    vector<int> input = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+    int result = solution.trap(input);
+    EXPECT_EQ(6, result);
+}
+
+TEST(TestTrappingRainWater, case03) {
+    Solution2 solution;
+    vector<int> input = {4, 0, 6, 0, 5, 0, 7, 0, 5, 0, 6, 0, 4, 0, 3};
+    int result = solution.trap(input);
+    EXPECT_EQ(37, result);
+}
+
+TEST(TestTrappingRainWater, case04) {
+    Solution2 solution;
     vector<int> input = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
     int result = solution.trap(input);
     EXPECT_EQ(6, result);

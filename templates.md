@@ -71,3 +71,12 @@ void traverse(TreeNode root) {
 - 链表、双向链表
 - 单调队列
 - 双指针
+
+
+单调栈
+DFS
+回溯
+排序
+链表
+双指针
+字符串

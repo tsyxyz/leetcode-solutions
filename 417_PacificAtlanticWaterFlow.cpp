@@ -5,7 +5,6 @@
 
 using namespace std;
 
-//// ! 还没完成！
 class Solution {
 public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
@@ -17,20 +16,25 @@ public:
 
         int r = 0, c = 0;
         for (; c < cols_; ++c) {
+            if (visited_[r * cols_ + c]) continue;
             bfs(heights, r, c, true);
         }
         c = 0;
         for (r = 1; r < rows_; ++r) {
+            if (visited_[r * cols_ + c]) continue;
             bfs(heights, r, c, true);
         }
 
+        visited_.clear();
         visited_.resize(rows_ * cols_, false);
         r = rows_ - 1;
         for (c = 0; c < cols_; ++c) {
+            if (visited_[r * cols_ + c]) continue;
             bfs(heights, r, c, false);
         }
         c = cols_ - 1;
         for (r = 0; r < rows_ - 1; ++r) {
+            if (visited_[r * cols_ + c]) continue;
             bfs(heights, r, c, false);
         }
 
